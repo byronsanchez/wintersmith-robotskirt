@@ -1,0 +1,10 @@
+{
+  "plugins": ["./../"],
+  "locals": {
+    "title": "Robotskirt Example"
+  },
+  "robotskirt": {
+    "extensions": ["ext_fenced_code", "ext_no_intra_emphasis", "ext_autolink", "ext_strikethrough", "ext_lax_spacing", "ext_superscript", "ext_tables", "html_use_xhtml", "html_toc", "ext_underline", "ext_footnotes", "ext_disable_indented_code_blocks"]
+  },
+  "pygments": true
+}
