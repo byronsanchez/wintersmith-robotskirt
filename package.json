@@ -1,0 +1,12 @@
+{
+  "name": "wintersmith-robotskirt",
+  "version": "0.1.0",
+  "author": "Byron Sanchez <hackBytes.com>",
+  "description": "robotskirt plugin for wintersmith",
+  "dependencies": {
+    "robotskirt": "~2.7.x",
+    "pygments": "~0.2.x",
+    "async": ">= 0.1.x",
+    "coffee-script": "1.6.x"
+  }
+}
