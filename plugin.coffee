@@ -3,26 +3,14 @@ Robotskirt = require 'robotskirt'
 fs = require 'fs'
 path = require 'path'
 url = require 'url'
-
-robotskirtRender = (page, callback, config) ->
-  # convert the page
-  extensions = config.extensions or []
-
-  robotskirt_extensions = []
-  for v,k in extensions
-    uppercase_value = v.toUpperCase()
-    robotskirt_extensions[k] = Robotskirt[uppercase_value]
-    console.log uppercase_value
-
-  markdown = new Robotskirt.Markdown(new Robotskirt.HtmlRenderer(), robotskirt_extensions)
-  page._htmlraw = markdown.render(page.markdown)
-  callback null, page
+hljs = require 'highlight.js'
 
 module.exports = (env, callback) ->
 
   class RobotskirtPage extends env.plugins.MarkdownPage
-    
-    getHtml: (base=env.config.baseUrl) ->      
+
+    getHtml: (base=env.config.baseUrl) ->
+
       # TODO: cleaner way to achieve this?
       # http://stackoverflow.com/a/4890350
       name = @getFilename()
@@ -37,7 +25,7 @@ module.exports = (env, callback) ->
       if base
         @_html = @_html.replace(/(<(a|img)[^>]+(href|src)=")\/([^"]+)/g, '$1' + base + '$4')
       return @_html
-    
+
     getIntro: (base=env.config.baseUrl) ->
       @_html = @getHtml(base)
       idx = ~@_html.indexOf('<span class="more') or ~@_html.indexOf('<h2') or ~@_html.indexOf('<hr')
@@ -52,7 +40,7 @@ module.exports = (env, callback) ->
       else
         @_intro = @_html
       return @_intro
-      
+       
     @property 'hasMore', ->
       @_html ?= @getHtml()
       @_intro ?= @getIntro()
@@ -60,6 +48,7 @@ module.exports = (env, callback) ->
       return @_hasMore
   
   RobotskirtPage.fromFile = (filepath, callback) ->
+
     async.waterfall [
       (callback) ->
         fs.readFile filepath.full, callback
@@ -70,7 +59,29 @@ module.exports = (env, callback) ->
         page = new this filepath, metadata, markdown
         callback null, page
       (page, callback) =>
-        robotskirtRender page, callback, env.config.robotskirt
+        renderer = new Robotskirt.HtmlRenderer()
+        # convert the page
+        extensions = env.config.robotskirt.extensions or []
+
+        robotskirt_extensions = []
+        for v,k in extensions
+          uppercase_value = v.toUpperCase()
+          robotskirt_extensions[k] = Robotskirt[uppercase_value]
+
+        renderer.blockcode = (code, lang) ->
+          if lang?
+            try
+              lang = 'cpp' if lang is 'c'
+              return "<div><pre><code class=\"lang-#{lang}\">" + hljs.highlight(lang, code).value + "</code></pre></div>"
+            catch error
+              return code
+          else
+            lang = 'text'
+            return "<div><pre><code class=\"lang-#{lang}\">" + code + "</code></pre></div>"
+
+        markdown = new Robotskirt.Markdown(renderer, robotskirt_extensions)
+        page._htmlraw = markdown.render(page.markdown)
+        callback null, page
       (page, callback) =>
         callback null, page
     ], callback
