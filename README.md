@@ -54,6 +54,12 @@ the flags you need in `config.json`:
       ]
     }
 
+If you wish to enable Smartypants, add the following to `config.json`:
+
+    "robotskirt": {
+      "smart": true
+    }
+
 ### Robotskirt extensions:
 
 - ext_autolink

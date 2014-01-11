@@ -130,7 +130,7 @@ Superscript/subscript:
 H~2~O is a liquid. 2^10^ is 1024.
 
 
-Smart characters (smartypants/robotskirt-extended) (TODO):
+Smart characters (smartypants/robotskirt-extended):
 --------------------------------------
 
 1. Smart quotes: "This is in quotations." This isn't. 'But this is this,' and here's an apostrophe.

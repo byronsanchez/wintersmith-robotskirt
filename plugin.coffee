@@ -63,6 +63,7 @@ module.exports = (env, callback) ->
       (page, callback) =>
         extensions = env.config.robotskirt.extensions or []
         html_flags = env.config.robotskirt.html_flags or []
+        isSmartypantsEnabled = env.config.robotskirt.smart or false
 
         robotskirt_extensions = []
         for v,k in extensions
@@ -72,7 +73,7 @@ module.exports = (env, callback) ->
         robotskirt_html_flags = []
         for v,k in html_flags
           uppercase_value = v.toUpperCase()
-          robotskirt_extensions[k] = Robotskirt[uppercase_value]
+          robotskirt_html_flags[k] = Robotskirt[uppercase_value]
 
         renderer = new Robotskirt.HtmlRenderer(robotskirt_html_flags)
 
@@ -89,7 +90,16 @@ module.exports = (env, callback) ->
             return "<div><pre><code class=\"lang-#{lang}\">" + code + "</code></pre></div>"
 
         markdown = new Robotskirt.Markdown(renderer, robotskirt_extensions)
-        page._htmlraw = markdown.render(page.markdown)
+        rendered_html = markdown.render(page.markdown)
+
+        if isSmartypantsEnabled
+          console.log "smart"
+          rendered_html = Robotskirt.smartypantsHtml(rendered_html)
+        else
+          console.log "no smart"
+
+        page._htmlraw = rendered_html
+
         callback null, page
       (page, callback) =>
         callback null, page
