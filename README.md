@@ -113,5 +113,5 @@ and distributed according to the terms of the GNU General Public License
 or a compatible license, including:
 
   Portions of wintersmith-showdown Copyright (c) 2014 Luke Hagan
-  <lukehagan.com>, licensed under the MIT License
+  (lukehagan.com), licensed under the MIT License
 
