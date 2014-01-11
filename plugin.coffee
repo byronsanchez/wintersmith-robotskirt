@@ -5,6 +5,50 @@ path = require 'path'
 url = require 'url'
 hljs = require 'highlight.js'
 
+renderMarkdownIntoHtml = (env, page) ->
+
+  extensions = env.config.robotskirt.extensions or []
+  htmlFlags = env.config.robotskirt.htmlFlags or []
+  isSmartypantsEnabled = env.config.robotskirt.smart or false
+
+  robotskirtExtensions = convertConfigurationStringsIntoRobotskirtIDs(extensions)
+  robotskirtHtmlFlags = convertConfigurationStringsIntoRobotskirtIDs(htmlFlags)
+
+  renderer = new Robotskirt.HtmlRenderer(robotskirtHtmlFlags)
+  renderer = defineSyntaxHighlightingForCodeBlocks(renderer)
+  markdown = new Robotskirt.Markdown(renderer, robotskirtExtensions)
+  renderedHtml = markdown.render(page.markdown)
+
+  if isSmartypantsEnabled
+    renderedHtml = Robotskirt.smartypantsHtml(renderedHtml)
+
+  return renderedHtml
+
+convertConfigurationStringsIntoRobotskirtIDs = (configurationStringObject) ->
+
+  robotskirtIDs = []
+  for v,k in configurationStringObject
+    uppercaseValue = v.toUpperCase()
+    robotskirtIDs[k] = Robotskirt[uppercaseValue]
+
+  return robotskirtIDs
+
+defineSyntaxHighlightingForCodeBlocks = (renderer) ->
+
+  renderer.blockcode = (code, lang) ->
+    if lang?
+      try
+        lang = 'cpp' if lang is 'c'
+        return "<div><pre><code class=\"lang-#{lang}\">" + hljs.highlight(lang, code).value + "</code></pre></div>"
+      catch error
+        console.log "error in hl!"
+        return code
+    else
+      lang = 'text'
+      return "<div><pre><code class=\"lang-#{lang}\">" + code + "</code></pre></div>"
+
+  return renderer
+
 module.exports = (env, callback) ->
 
   class RobotskirtPage extends env.plugins.MarkdownPage
@@ -61,44 +105,8 @@ module.exports = (env, callback) ->
         page = new this filepath, metadata, markdown
         callback null, page
       (page, callback) =>
-        extensions = env.config.robotskirt.extensions or []
-        html_flags = env.config.robotskirt.html_flags or []
-        isSmartypantsEnabled = env.config.robotskirt.smart or false
-
-        robotskirt_extensions = []
-        for v,k in extensions
-          uppercase_value = v.toUpperCase()
-          robotskirt_extensions[k] = Robotskirt[uppercase_value]
-
-        robotskirt_html_flags = []
-        for v,k in html_flags
-          uppercase_value = v.toUpperCase()
-          robotskirt_html_flags[k] = Robotskirt[uppercase_value]
-
-        renderer = new Robotskirt.HtmlRenderer(robotskirt_html_flags)
-
-        renderer.blockcode = (code, lang) ->
-          if lang?
-            try
-              lang = 'cpp' if lang is 'c'
-              return "<div><pre><code class=\"lang-#{lang}\">" + hljs.highlight(lang, code).value + "</code></pre></div>"
-            catch error
-              console.log "error in hl!"
-              return code
-          else
-            lang = 'text'
-            return "<div><pre><code class=\"lang-#{lang}\">" + code + "</code></pre></div>"
-
-        markdown = new Robotskirt.Markdown(renderer, robotskirt_extensions)
-        rendered_html = markdown.render(page.markdown)
-
-        if isSmartypantsEnabled
-          console.log "smart"
-          rendered_html = Robotskirt.smartypantsHtml(rendered_html)
-        else
-          console.log "no smart"
-
-        page._htmlraw = rendered_html
+        renderedHtml = renderMarkdownIntoHtml(env, page)
+        page._htmlraw = renderedHtml
 
         callback null, page
       (page, callback) =>

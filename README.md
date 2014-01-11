@@ -48,7 +48,7 @@ You may also configure how the HTML renderer outputs your html files. Identify
 the flags you need in `config.json`:
 
     "robotskirt": {
-      "html_flags": [
+      "htmlFlags": [
         "html_use_xhtml",
         "html_hard_wrap"
       ]

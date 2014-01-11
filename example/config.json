@@ -5,7 +5,7 @@
   },
   "robotskirt": {
     "extensions": ["ext_fenced_code", "ext_no_intra_emphasis", "ext_autolink", "ext_strikethrough", "ext_lax_spacing", "ext_superscript", "ext_tables"],
-    "html_flags": ["html_use_xhtml"],
+    "htmlFlags": ["html_use_xhtml"],
     "smart": true
   }
 }
