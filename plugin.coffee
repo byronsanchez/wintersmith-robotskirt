@@ -53,8 +53,11 @@ module.exports = (env, callback) ->
 
   class RobotskirtPage extends env.plugins.MarkdownPage
 
+    # Method written by Luke Hagan (lukehagan.com)
+    # Licensed under the MIT license
+    # https://github.com/lhagan/wintersmith-showdown/blob/master/plugin.coffee
+    # Commit ID: 24cb3539b23d3749cfcad90012f1d98d544d9868
     getHtml: (base=env.config.baseUrl) ->
-
       # TODO: cleaner way to achieve this?
       # http://stackoverflow.com/a/4890350
       name = @getFilename()
