@@ -54,17 +54,18 @@ the flags you need in `config.json`:
       ]
     }
 
-List of available Robotskirt extensions:
+### Robotskirt extensions:
 
-- ext_fenced_code
-- ext_no_intra_emphasis
 - ext_autolink
-- ext_strikethrough
+- ext_fenced_code
 - ext_lax_spacing
+- ext_no_intra_emphasis
+- ext_space_headers
+- ext_strikethrough
 - ext_superscript
 - ext_tables
 
-List of HTML rendering flags:
+### HTML rendering flags:
 
 - html_skip_html
 - html_skip_style
