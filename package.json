@@ -2,7 +2,7 @@
   "name": "wintersmith-robotskirt",
   "version": "0.1.0",
   "author": "Byron Sanchez <hackBytes.com>",
-  "description": "robotskirt plugin for wintersmith",
+  "description": "Robotskirt plugin for Wintersmith",
   "dependencies": {
     "robotskirt": "~2.7.x",
     "highlight.js": "~7.5.x",

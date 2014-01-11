@@ -71,31 +71,27 @@ module.exports = (env, callback) ->
       # handles non-relative links within the site (e.g. /about)
       if base
         @_html = @_html.replace(/(<(a|img)[^>]+(href|src)=")\/([^"]+)/g, '$1' + base + '$4')
-      # handle <!--more-->
-      @_html.replace(/<!--more-->/g, '<p><span id="more"></span></p>')
       return @_html
 
-    getIntro: (base=env.config.baseUrl) ->
-      @_html = @getHtml(base)
-      idx = ~@_html.indexOf('<span class="more') or ~@_html.indexOf('<h2') or ~@_html.indexOf('<hr')
-      # TODO: simplify!
-      if idx
-        @_intro = @_html.toString().substr 0, ~idx
-        hr_index = @_html.indexOf('<hr')
-        footnotes_index = @_html.indexOf('<div class="footnotes">')
-        # ignore hr if part of Robotskirt's footnote section
-        if hr_index && ~footnotes_index && !(hr_index < footnotes_index)
-          @_intro = @_html
+    getIntro: (base) ->
+      html = @getHtml(base)
+      cutoffs = ['<!--more-->', '<span class="more', '<h2', '<hr']
+      idx = Infinity
+      for cutoff in cutoffs
+        i = html.indexOf cutoff
+        if i isnt -1 and i < idx
+          idx = i
+      if idx isnt Infinity
+        return html.substr 0, idx
       else
-        @_intro = @_html
-      return @_intro
-       
+        return html
+
     @property 'hasMore', ->
       @_html ?= @getHtml()
       @_intro ?= @getIntro()
       @_hasMore ?= (@_html.length > @_intro.length)
       return @_hasMore
-  
+
   RobotskirtPage.fromFile = (filepath, callback) ->
 
     async.waterfall [
@@ -110,7 +106,6 @@ module.exports = (env, callback) ->
       (page, callback) =>
         renderedHtml = renderMarkdownIntoHtml(env, page)
         page._htmlraw = renderedHtml
-
         callback null, page
       (page, callback) =>
         callback null, page
