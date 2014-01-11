@@ -41,7 +41,6 @@ defineSyntaxHighlightingForCodeBlocks = (renderer) ->
         lang = 'cpp' if lang is 'c'
         return "<div><pre><code class=\"lang-#{lang}\">" + hljs.highlight(lang, code).value + "</code></pre></div>"
       catch error
-        console.log "error in hl!"
         return code
     else
       lang = 'text'
