@@ -24,6 +24,8 @@ module.exports = (env, callback) ->
       # handles non-relative links within the site (e.g. /about)
       if base
         @_html = @_html.replace(/(<(a|img)[^>]+(href|src)=")\/([^"]+)/g, '$1' + base + '$4')
+      # handle <!--more-->
+      @_html.replace(/<!--more-->/g, '<p><span id="more"></span></p>')
       return @_html
 
     getIntro: (base=env.config.baseUrl) ->
@@ -59,14 +61,20 @@ module.exports = (env, callback) ->
         page = new this filepath, metadata, markdown
         callback null, page
       (page, callback) =>
-        renderer = new Robotskirt.HtmlRenderer()
-        # convert the page
         extensions = env.config.robotskirt.extensions or []
+        html_flags = env.config.robotskirt.html_flags or []
 
         robotskirt_extensions = []
         for v,k in extensions
           uppercase_value = v.toUpperCase()
           robotskirt_extensions[k] = Robotskirt[uppercase_value]
+
+        robotskirt_html_flags = []
+        for v,k in html_flags
+          uppercase_value = v.toUpperCase()
+          robotskirt_extensions[k] = Robotskirt[uppercase_value]
+
+        renderer = new Robotskirt.HtmlRenderer(robotskirt_html_flags)
 
         renderer.blockcode = (code, lang) ->
           if lang?
@@ -74,6 +82,7 @@ module.exports = (env, callback) ->
               lang = 'cpp' if lang is 'c'
               return "<div><pre><code class=\"lang-#{lang}\">" + hljs.highlight(lang, code).value + "</code></pre></div>"
             catch error
+              console.log "error in hl!"
               return code
           else
             lang = 'text'

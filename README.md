@@ -30,8 +30,9 @@ In your `config.json` file, you must define the location of the plugin:
 
 ## Configuration
 
-You may configure how robotskirt renders the html defining any of robotskirt's
-available extensions in a robotskirt configuration option in `config.json.`:
+You may configure how robotskirt parses the Markdown content using Robotskirt
+extensions. Simply define the extensions you wish to use in `config.json` as 
+follows:
 
     "robotskirt": {
       "extensions": [
@@ -43,7 +44,17 @@ available extensions in a robotskirt configuration option in `config.json.`:
       ]
     }
 
-The available extensions are as follows:
+You may also configure how the HTML renderer outputs your html files. Identify 
+the flags you need in `config.json`:
+
+    "robotskirt": {
+      "html_flags": [
+        "html_use_xhtml",
+        "html_hard_wrap"
+      ]
+    }
+
+List of available Robotskirt extensions:
 
 - ext_fenced_code
 - ext_no_intra_emphasis
@@ -52,6 +63,19 @@ The available extensions are as follows:
 - ext_lax_spacing
 - ext_superscript
 - ext_tables
+
+List of HTML rendering flags:
+
+- html_skip_html
+- html_skip_style
+- html_skip_images
+- html_skip_links
+- html_expand_tabs
+- html_safelink
+- html_toc
+- html_hard_wrap
+- html_use_xhtml
+- html_escape
 
 ## Usage
 
