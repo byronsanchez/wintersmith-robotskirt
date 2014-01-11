@@ -54,12 +54,6 @@ the flags you need in `config.json`:
       ]
     }
 
-If you wish to enable Smartypants, add the following to `config.json`:
-
-    "robotskirt": {
-      "smart": true
-    }
-
 ### Robotskirt extensions:
 
 - ext_autolink
@@ -84,6 +78,14 @@ If you wish to enable Smartypants, add the following to `config.json`:
 - html_use_xhtml
 - html_escape
 
+### Smartypants
+
+If you wish to enable Smartypants, add the following to `config.json`:
+
+    "robotskirt": {
+      "smart": true
+    }
+
 ## Usage
 
 After doing the initial setup and configuration, your wintersmith builds will 
@@ -91,5 +93,25 @@ automatically use Robotskirt to render html pages.
 
 ## License
 
-TODO
+"wintersmith-robotskirt" is Copyright (c) 2014 by Byron Sanchez, licensed under 
+the GNU GPL v2.0.
+
+This program is free software: you can redistribute it and/or modify it
+under the terms of the GNU General Public License as published by the
+Free Software Foundation, version 2 of the License.
+
+This program is distributed in the hope that it will be useful, but
+WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+General Public License for more details.
+
+You should have received a copy of the GNU General Public License along
+with this program. If not, see <http://www.gnu.org/licenses/>.
+
+"wintersmith-robotskirt" includes works under other copyright notices
+and distributed according to the terms of the GNU General Public License
+or a compatible license, including:
+
+  Portions of wintersmith-showdown Copyright (c) 2014 Luke Hagan
+  <lukehagan.com>, licensed under the MIT License
 
