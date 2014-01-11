@@ -4,6 +4,10 @@
   "author": "Byron Sanchez <hackBytes.com>",
   "description": "Robotskirt plugin for Wintersmith",
   "license": "GPL-2.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/byronsanchez/wintersmith-robotskirt.git"
+  },
   "dependencies": {
     "robotskirt": "~2.7.x",
     "highlight.js": "~7.5.x",
