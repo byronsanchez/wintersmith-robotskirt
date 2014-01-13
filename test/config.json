@@ -1,0 +1,13 @@
+{
+  "plugins": [
+    "./../index-dev.js"
+  ],
+  "locals": {
+    "title": "Robotskirt Example"
+  },
+  "robotskirt": {
+    "extensions": ["ext_fenced_code", "ext_no_intra_emphasis", "ext_autolink", "ext_strikethrough", "ext_lax_spacing", "ext_superscript", "ext_tables"],
+    "htmlFlags": ["html_use_xhtml"],
+    "smart": true
+  }
+}
