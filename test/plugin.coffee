@@ -110,16 +110,3 @@ describe "wintersmith-robotskirt", ->
     expect(html).to.equal("<p><strong>Simple markdown</strong> with a ~~strikethrough~~ if ext and &ldquo;quotes&rdquo;</p>")
     done()
 
-  it "should accept <!--more--> as a valid intro cutoff point", (done) ->
-    config = {}
-    config.robotskirt = {}
-    config.robotskirt.extensions = []
-    config.robotskirt.htmlFlags = []
-    config.robotskirt.smart = false
-    page = {}
-    page.markdown = "**Simple markdown** with a ~~strikethrough~~ if ext and \"quotes\""
-    # Ignoring newlines for now.
-    html = Robotskirt.renderMarkdownIntoHtml(config, page).replace(/\r?\n|\r/g, '')
-    expect(html).to.equal("<p><strong>Simple markdown</strong> with a ~~strikethrough~~ if ext and &quot;quotes&quot;</p>")
-    done()
-
