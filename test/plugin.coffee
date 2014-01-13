@@ -26,7 +26,7 @@ describe "wintersmith-robotskirt", ->
     env.load((err, result) ->
       loadedData = result
       expect(loadedData.contents).to.be.an.instanceOf(wintersmith.ContentTree)
-      Robotskirt = env.plugins.RobotskirtPage
+      Robotskirt = env.helpers.RobotskirtPage
       done()
     )
 

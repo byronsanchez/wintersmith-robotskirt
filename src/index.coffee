@@ -109,6 +109,7 @@ module.exports = (env, callback) ->
     ], callback
    
   env.registerContentPlugin 'pages', '**/*.*(markdown|mkd|md)', RobotskirtPage
+  env.helpers.RobotskirtPage = RobotskirtPage
 
   callback()
 
