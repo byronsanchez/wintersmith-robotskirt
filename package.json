@@ -1,0 +1,37 @@
+{
+  "name": "wintersmith-robotskirt",
+  "version": "0.1.0",
+  "author": "Byron Sanchez <hackBytes.com>",
+  "description": "Robotskirt plugin for Wintersmith",
+  "license": "GPL-2.0",
+  "keywords": [
+    "wintersmith",
+    "robotskirt",
+    "wintersmith-robotskirt"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/byronsanchez/wintersmith-robotskirt.git"
+  },
+  "main": "lib/",
+  "dependencies": {
+    "robotskirt": "2.7.x",
+    "highlight.js": "7.5.x",
+    "async": ">= 0.1.x"
+  },
+  "devDependencies": {
+    "coffee-script": "1.6.x",
+    "path": "0.4.x",
+    "wintersmith": "2.x",
+    "mocha": "1.17.x",
+    "chai": "1.8.x"
+  },
+  "peerDependencies": {
+    "wintersmith": "2.x"
+  },
+  "scripts": {
+    "test": "./node_modules/.bin/mocha",
+    "prepublish": "./bin/compile"
+  }
+}
+
