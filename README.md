@@ -1,5 +1,9 @@
 # wintersmith-robotskirt
 
+[![Build Status](https://secure.travis-ci.org/byronsanchez/wintersmith-robotskirt.png?branch=develop)][travis]
+
+[travis]: https://travis-ci.org/byronsanchez/wintersmith-robotskirt
+
 [Robotskirt](https://github.com/benmills/robotskirt) plugin for 
 [Wintersmith](https://github.com/jnordberg/wintersmith). It will render
 Markdown content using Robotskirt. Code highlighting is done via 
